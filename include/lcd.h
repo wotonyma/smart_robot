@@ -1,0 +1,34 @@
+#ifndef __LCD_H__
+#define __LCD_H__
+
+
+#include <stdio.h>   	//printf scanf
+#include <fcntl.h>		//open write read lseek close  	 
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <stdlib.h>
+
+
+
+#define LCD_WIDTH  			800
+#define LCD_HEIGHT 			480
+#define FB_SIZE				(LCD_WIDTH * LCD_HEIGHT * 4)
+
+#define EN_LCD_SHOW_JPG		1
+
+/* 画中画显示的坐标 */
+volatile int g_jpg_in_jpg_x;
+volatile int g_jpg_in_jpg_y;
+
+
+
+unsigned long file_size_get(const char *pfile_path);
+
+int lcd_open(const char *str);
+void lcd_draw_point(unsigned int x,unsigned int y, unsigned int color);
+int lcd_draw_jpg(unsigned int x,unsigned int y,const char *pjpg_path,unsigned char *pjpg_buf,unsigned int jpg_buf_size,unsigned int jpg_half);
+int lcd_draw_bmp(unsigned int x,unsigned int y,const char *pbmp_path);
+void close_lcd(void);
+#endif
